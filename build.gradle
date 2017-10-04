@@ -1,0 +1,54 @@
+group 'io.aurorasolutions'
+version '1.1'
+
+apply plugin: 'java-library'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.bintray'
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
+    }
+}
+
+dependencies {
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version:'2.5.0'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version:'2.5.0'
+    compile 'org.assertj:assertj-core:3.8.0'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+bintray {
+    user = 'iamwaseem'
+    key = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    publications = ['MyPublication']
+    pkg {
+        repo = 'Assertions'
+        name = 'Assertions'
+        userOrg = 'aurorasolutions'
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/aurora-solutions/assertions-java-lib.git'
+        publicDownloadNumbers = true
+    }
+}
+
+publishing {
+    publications {
+        MyPublication(MavenPublication) {
+            from components.java
+            groupId 'io.aurorasolutions'
+            artifactId 'assertions'
+            version '1.1'
+        }
+    }
+}
