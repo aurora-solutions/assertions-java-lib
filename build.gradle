@@ -1,5 +1,5 @@
 group 'io.aurorasolutions'
-version '1.1'
+version '1.2'
 
 apply plugin: 'java-library'
 apply plugin: 'maven'
@@ -10,6 +10,20 @@ sourceCompatibility = 1.8
 repositories {
     mavenCentral()
     jcenter()
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar, javadocJar
 }
 
 buildscript {
@@ -30,8 +44,9 @@ dependencies {
 
 bintray {
     user = 'iamwaseem'
-    key = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    key = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
     publications = ['MyPublication']
+    publish = true //If version should be auto published after an upload
     pkg {
         repo = 'Assertions'
         name = 'Assertions'
@@ -48,7 +63,10 @@ publishing {
             from components.java
             groupId 'io.aurorasolutions'
             artifactId 'assertions'
-            version '1.1'
+            version '1.2'
+
+            artifact sourcesJar
+            artifact javadocJar
         }
     }
 }
