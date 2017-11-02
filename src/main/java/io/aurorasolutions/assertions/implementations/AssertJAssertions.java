@@ -25,13 +25,13 @@ public class AssertJAssertions extends AssertionsBase {
                 assertThat((Class)result[0]).isEqualTo(this.exceptionType);
                 break;
             case True:
-                if(isResultValid()) {
+                if(!isResultValid()) {
                     throw new IllegalArgumentException("result");
                 }
                 assertThat((boolean) result[0]).isTrue();
                 break;
             case False:
-                if(isResultValid()) {
+                if(!isResultValid()) {
                     throw new IllegalArgumentException("result");
                 }
                 assertThat((boolean) result[0]).isFalse();
